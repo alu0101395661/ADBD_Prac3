@@ -41,7 +41,9 @@ INSERT INTO Vivero (Nombre, Latitud, Longitud) VALUES
 ('Vivero Costa Adeje', 28.080000, -16.730000),
 ('Vivero Gran Canaria Tamaraceite', 28.099000, -15.462000);
 
+<img width="877" height="227" alt="image" src="https://github.com/user-attachments/assets/3331f17a-570a-4cc9-b1a8-c7c22ce2720f" />
 
+### Tabla de Zona
 
 CREATE TABLE Zona (
     ID_vivero INT NOT NULL,
@@ -55,6 +57,20 @@ CREATE TABLE Zona (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Zona (ID_vivero, ID_Zona, Nombre, Latitud, Longitud) VALUES
+(1, 1, 'Zona Exterior Plantas', 28.481110, -16.321110),
+(1, 2, 'Almacén Principal', 28.481120, -16.321120),
+(2, 1, 'Invernadero A', 28.032110, -16.612010),
+(2, 2, 'Zona Decoración', 28.032120, -16.612020),
+(3, 1, 'Zona Herramientas y Abonos', 28.391010, -16.523010);
+
+
+<img width="941" height="252" alt="image" src="https://github.com/user-attachments/assets/3fedcda8-f24e-4ad8-838e-1a60c5d6b50d" />
+
+### Tabla de Producto
+
 CREATE TABLE Producto (
     ID_producto SERIAL,
     Nombre VARCHAR(100) NOT NULL,
@@ -62,6 +78,17 @@ CREATE TABLE Producto (
     Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0.00),
     CONSTRAINT PK_Producto PRIMARY KEY (ID_producto)
 );
+
+### Ejemplos añadidos
+
+INSERT INTO Producto (Nombre, Tipo, Precio) VALUES
+('Rosal Rojo', 'Planta', 12.50),
+('Crece plantas 50L', 'Abono', 8.95),
+('Tijeras de Podar Pro', 'Herramienta', 18.20),
+('Maceta de Cerámica', 'Decoración', 15.00);
+
+### Tabla de Stock
+
 
 CREATE TABLE Stock (
     ID_vivero INT NOT NULL,
@@ -77,6 +104,17 @@ CREATE TABLE Stock (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Stock (ID_vivero, ID_Zona, ID_producto, Cantidad) VALUES
+(1, 1, 1, 150),
+(1, 2, 3, 300),
+(2, 1, 2, 45),
+(2, 2, 5, 80),
+(3, 1, 4, 25);
+
+### Tabla de Empleado
+
 CREATE TABLE Empleado (
     ID_empleado SERIAL,
     DNI_NIE VARCHAR(10) NOT NULL,
@@ -86,6 +124,17 @@ CREATE TABLE Empleado (
     CONSTRAINT UQ_Empleado_DNI UNIQUE (DNI_NIE)
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Empleado (DNI_NIE, Nombre, Apellidos) VALUES
+('12345678A', 'Juan', 'Pérez Gómez'),
+('87654321B', 'María', 'López Hernández'),
+('11223344C', 'Carlos', 'Rodríguez Martín'),
+('44332211D', 'Laura', 'Sánchez Díaz'),
+('55667788E', 'Pedro', 'García Torres');
+
+
+### Tabla de Historico_puesto
 
 CREATE TABLE Historico_puesto (
     ID_empleado INT NOT NULL,
@@ -105,6 +154,18 @@ CREATE TABLE Historico_puesto (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+### Ejemplos añadidos
+
+
+INSERT INTO Historico_puesto (ID_empleado, ID_vivero, ID_Zona, Fecha_ini, Fecha_fin, Puesto_Tarea, Indicador_Productividad) VALUES
+(1, 1, 1, '2025-01-01', '2025-06-30', 'Encargado de Riego', 92.50),
+(1, 1, 2, '2025-07-01', NULL, 'Mozo de Almacén', 88.00),
+(2, 2, 1, '2025-02-15', NULL, 'Especialista Invernadero', 95.00),
+(3, 2, 2, '2025-03-01', '2025-08-31', 'Vendedor Decoración', 85.00),
+(4, 3, 1, '2025-01-10', NULL, 'Atención al Cliente', 90.00);
+
+### Tabla de Cliente_Plus
+
 CREATE TABLE Cliente_Plus (
     ID_Cliente SERIAL,
     Nombre VARCHAR(50) NOT NULL,
@@ -116,6 +177,17 @@ CREATE TABLE Cliente_Plus (
     CONSTRAINT CK_Cliente_Plus_Email_Format CHECK (Email LIKE '%@%.%')
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Cliente_Plus (Nombre, Apellidos, Email, Fecha_Ingreso_Plus) VALUES
+('Ana', 'Fernández Ramos', 'ana.fernandez@email.com', '2024-01-15'),
+('David', 'Suárez Castro', 'david.suarez@email.com', '2024-03-20'),
+('Elena', 'Morales Gil', 'elena.morales@email.com', '2024-05-10'),
+('Roberto', 'Mendoza Delgado', 'roberto.mendoza@email.com', '2024-08-01'),
+('Carmen', 'Santana Ruiz', 'carmen.santana@email.com', '2025-01-05');
+
+
+### Tabla de Bonificacion
 
 CREATE TABLE Bonificacion (
     ID_bonificacion SERIAL,
@@ -130,6 +202,18 @@ CREATE TABLE Bonificacion (
         REFERENCES Cliente_Plus(ID_Cliente) 
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+### Ejemplos añadidos
+
+INSERT INTO Bonificacion (ID_Cliente, Mes_año, Volumen_compras, Bonificacion) VALUES
+(1, '2026-01', 150.00, 15.00),
+(1, '2026-02', 200.00, 20.00),
+(2, '2026-01', 80.00, 5.00),
+(3, '2026-02', 310.00, 35.00),
+(4, '2026-02', 50.00, 0.00);
+
+
+### Tabla de Pedido
 
 CREATE TABLE Pedido (
     ID_pedido SERIAL,
@@ -146,6 +230,17 @@ CREATE TABLE Pedido (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Pedido (Fecha, Importe_Total, ID_Cliente, ID_empleado) VALUES
+('2026-02-01 10:30:00', 37.50, 1, 1),
+('2026-02-05 12:15:00', 25.00, 2, 2),
+('2026-02-10 16:45:00', 45.40, 3, 4),
+('2026-02-14 11:00:00', 15.00, 1, 1),
+('2026-02-20 18:20:00', 89.50, 4, 3);
+
+
+### Tabla de Detalle_Pedido
 
 CREATE TABLE Detalle_Pedido (
     ID_pedido INT NOT NULL,
@@ -161,6 +256,14 @@ CREATE TABLE Detalle_Pedido (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+### Ejemplos añadidos
+
+INSERT INTO Detalle_Pedido (ID_pedido, ID_producto, Cantidad, Precio_Unitario) VALUES
+(1, 1, 3, 12.50), 
+(2, 2, 1, 25.00), 
+(3, 3, 2, 8.95), 
+(3, 4, 1, 18.20), 
+(4, 5, 1, 15.00);
 
 
 CREATE VIEW Vista_Pedidos_Totales AS
@@ -176,88 +279,27 @@ GROUP BY p.ID_pedido, p.Fecha, p.ID_Cliente, p.ID_empleado;
 
 
 
-INSERT INTO Vivero (Nombre, Latitud, Longitud) VALUES
-('Vivero Central Anaga', 28.481100, -16.321100),
-('Vivero Sur Las Chafiras', 28.032100, -16.612000),
-('Vivero Norte La Orotava', 28.391000, -16.523000),
-('Vivero Costa Adeje', 28.080000, -16.730000),
-('Vivero Gran Canaria Tamaraceite', 28.099000, -15.462000);
 
 
 
-INSERT INTO Zona (ID_vivero, ID_Zona, Nombre, Latitud, Longitud) VALUES
-(1, 1, 'Zona Exterior Plantas', 28.481110, -16.321110),
-(1, 2, 'Almacén Principal', 28.481120, -16.321120),
-(2, 1, 'Invernadero A', 28.032110, -16.612010),
-(2, 2, 'Zona Decoración', 28.032120, -16.612020),
-(3, 1, 'Zona Herramientas y Abonos', 28.391010, -16.523010);
-
-
-INSERT INTO Producto (Nombre, Tipo, Precio) VALUES
-('Rosal Rojo', 'Planta', 12.50),
-('Crece plantas 50L', 'Abono', 8.95),
-('Tijeras de Podar Pro', 'Herramienta', 18.20),
-('Maceta de Cerámica', 'Decoración', 15.00);
 
 
 
-INSERT INTO Stock (ID_vivero, ID_Zona, ID_producto, Cantidad) VALUES
-(1, 1, 1, 150),
-(1, 2, 3, 300),
-(2, 1, 2, 45),
-(2, 2, 5, 80),
-(3, 1, 4, 25);
 
 
 
-INSERT INTO Empleado (DNI_NIE, Nombre, Apellidos) VALUES
-('12345678A', 'Juan', 'Pérez Gómez'),
-('87654321B', 'María', 'López Hernández'),
-('11223344C', 'Carlos', 'Rodríguez Martín'),
-('44332211D', 'Laura', 'Sánchez Díaz'),
-('55667788E', 'Pedro', 'García Torres');
 
 
 
-INSERT INTO Historico_puesto (ID_empleado, ID_vivero, ID_Zona, Fecha_ini, Fecha_fin, Puesto_Tarea, Indicador_Productividad) VALUES
-(1, 1, 1, '2025-01-01', '2025-06-30', 'Encargado de Riego', 92.50),
-(1, 1, 2, '2025-07-01', NULL, 'Mozo de Almacén', 88.00),
-(2, 2, 1, '2025-02-15', NULL, 'Especialista Invernadero', 95.00),
-(3, 2, 2, '2025-03-01', '2025-08-31', 'Vendedor Decoración', 85.00),
-(4, 3, 1, '2025-01-10', NULL, 'Atención al Cliente', 90.00);
-
-
-INSERT INTO Cliente_Plus (Nombre, Apellidos, Email, Fecha_Ingreso_Plus) VALUES
-('Ana', 'Fernández Ramos', 'ana.fernandez@email.com', '2024-01-15'),
-('David', 'Suárez Castro', 'david.suarez@email.com', '2024-03-20'),
-('Elena', 'Morales Gil', 'elena.morales@email.com', '2024-05-10'),
-('Roberto', 'Mendoza Delgado', 'roberto.mendoza@email.com', '2024-08-01'),
-('Carmen', 'Santana Ruiz', 'carmen.santana@email.com', '2025-01-05');
 
 
 
-INSERT INTO Bonificacion (ID_Cliente, Mes_año, Volumen_compras, Bonificacion) VALUES
-(1, '2026-01', 150.00, 15.00),
-(1, '2026-02', 200.00, 20.00),
-(2, '2026-01', 80.00, 5.00),
-(3, '2026-02', 310.00, 35.00),
-(4, '2026-02', 50.00, 0.00);
 
 
 
-INSERT INTO Pedido (Fecha, Importe_Total, ID_Cliente, ID_empleado) VALUES
-('2026-02-01 10:30:00', 37.50, 1, 1),
-('2026-02-05 12:15:00', 25.00, 2, 2),
-('2026-02-10 16:45:00', 45.40, 3, 4),
-('2026-02-14 11:00:00', 15.00, 1, 1),
-('2026-02-20 18:20:00', 89.50, 4, 3);
 
-INSERT INTO Detalle_Pedido (ID_pedido, ID_producto, Cantidad, Precio_Unitario) VALUES
-(1, 1, 3, 12.50), 
-(2, 2, 1, 25.00), 
-(3, 3, 2, 8.95), 
-(3, 4, 1, 18.20), 
-(4, 5, 1, 15.00);
+
+
 
 UPDATE Pedido p
 SET Importe_Total = (
