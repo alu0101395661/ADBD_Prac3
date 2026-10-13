@@ -22,7 +22,6 @@ CREATE DATABASE viveros;
 ### Tablas del modelo relacional
 
 ### Tabla de Vivero
- va aumentando según se añaden nuevos viveros. 
 
 CREATE TABLE Vivero (
     ID_vivero SERIAL,
