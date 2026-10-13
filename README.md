@@ -281,35 +281,32 @@ INSERT INTO Detalle_Pedido (ID_pedido, ID_producto, Cantidad, Precio_Unitario) V
 
 <img width="657" height="211" alt="image" src="https://github.com/user-attachments/assets/dc9e66db-bb27-4d06-af7e-c197f56d5b42" />
 
-CREATE VIEW Vista_Pedidos_Totales AS
-SELECT 
-    p.ID_pedido,
-    p.Fecha,
-    p.ID_Cliente,
-    p.ID_empleado,
-    COALESCE(SUM(dp.Cantidad * dp.Precio_Unitario), 0.00) AS Importe_Total_Calculado
-FROM Pedido p
-LEFT JOIN Detalle_Pedido dp ON p.ID_pedido = dp.ID_pedido
-GROUP BY p.ID_pedido, p.Fecha, p.ID_Cliente, p.ID_empleado;
 
 
 
+## Ejemplos de la operación DELETE
 
+### Borrado en Cascada:
+Al eliminar un Vivero con el comando:
 
+DELETE FROM Vivero 
+WHERE ID_vivero = 1;
 
+La base de datos elimina automáticamente las zonas asociadas en la tabla Zona, el stock que estaba en las zonas, y los registros del historico_puesto vinculado a esas zonas.
 
+### Borrado de Padre
+Al borrar a un cliente_plus con el comando:
 
+DELETE FROM Cliente_Plus 
+WHERE ID_Cliente = 5;
 
+Sus bonificaciones mensuales se eliminan en cascada debido a las entidades dependientes.
 
+### Prueba de Restricción Integridad  (ON DELETE RESTRICT)
 
+La siguiente sentencia fallará si se intenta borrar un Empleado o Producto que tiene Pedidos asgignaods.
 
-
-UPDATE Pedido p
-SET Importe_Total = (
-    SELECT COALESCE(SUM(dp.Cantidad * dp.Precio_Unitario), 0)
-    FROM Detalle_Pedido dp
-    WHERE dp.ID_pedido = p.ID_pedido
-);
+DELETE FROM Empleado WHERE ID_empleado = 1;
 
 
 
