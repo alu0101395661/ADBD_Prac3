@@ -135,6 +135,8 @@ INSERT INTO Empleado (DNI_NIE, Nombre, Apellidos) VALUES
 ('44332211D', 'Laura', 'Sánchez Díaz'),
 ('55667788E', 'Pedro', 'García Torres');
 
+<img width="700" height="191" alt="image" src="https://github.com/user-attachments/assets/4b04800b-c785-4bfb-a6fb-aab9d1c6ed21" />
+
 
 ### Tabla de Historico_puesto
 
