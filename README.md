@@ -1,9 +1,12 @@
 # ADBD_Prac3
 
+## Modelo entidad-relación
+
 <img width="1547" height="998" alt="Diagrama drawio" src="https://github.com/user-attachments/assets/f032fa47-27a4-4d6e-b8c8-541976a4b758" />
 
 
 
+## Modelo Relacional
 
 <img width="1068" height="1009" alt="Diagrama drawio (3)" src="https://github.com/user-attachments/assets/bd26b00f-8c81-4da4-bf3f-61e530077e09" />
 
@@ -18,6 +21,9 @@ CREATE DATABASE viveros;
 
 ### Tablas del modelo relacional
 
+### Tabla de Vivero
+ va aumentando según se añaden nuevos viveros. 
+
 CREATE TABLE Vivero (
     ID_vivero SERIAL,
     Nombre VARCHAR(100) NOT NULL,
@@ -25,6 +31,17 @@ CREATE TABLE Vivero (
     Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000),
     CONSTRAINT PK_Vivero PRIMARY KEY (ID_vivero)
 );
+
+### Ejemplos añadidos
+
+INSERT INTO Vivero (Nombre, Latitud, Longitud) VALUES
+('Vivero Central Anaga', 28.481100, -16.321100),
+('Vivero Sur Las Chafiras', 28.032100, -16.612000),
+('Vivero Norte La Orotava', 28.391000, -16.523000),
+('Vivero Costa Adeje', 28.080000, -16.730000),
+('Vivero Gran Canaria Tamaraceite', 28.099000, -15.462000);
+
+
 
 CREATE TABLE Zona (
     ID_vivero INT NOT NULL,
