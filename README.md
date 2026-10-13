@@ -87,6 +87,8 @@ INSERT INTO Producto (Nombre, Tipo, Precio) VALUES
 ('Tijeras de Podar Pro', 'Herramienta', 18.20),
 ('Maceta de Cerámica', 'Decoración', 15.00);
 
+<img width="770" height="202" alt="image" src="https://github.com/user-attachments/assets/c9abe751-7052-4ba0-b684-f8b59ed9cecc" />
+
 ### Tabla de Stock
 
 
@@ -266,6 +268,8 @@ INSERT INTO Detalle_Pedido (ID_pedido, ID_producto, Cantidad, Precio_Unitario) V
 (4, 5, 1, 15.00);
 
 
+<img width="657" height="211" alt="image" src="https://github.com/user-attachments/assets/dc9e66db-bb27-4d06-af7e-c197f56d5b42" />
+
 CREATE VIEW Vista_Pedidos_Totales AS
 SELECT 
     p.ID_pedido,
@@ -309,11 +313,7 @@ SET Importe_Total = (
 );
 
 
-<img width="941" height="252" alt="image" src="https://github.com/user-attachments/assets/3fedcda8-f24e-4ad8-838e-1a60c5d6b50d" />
 
-
-
-<img width="877" height="227" alt="image" src="https://github.com/user-attachments/assets/3331f17a-570a-4cc9-b1a8-c7c22ce2720f" />
 
 
 
