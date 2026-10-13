@@ -168,6 +168,8 @@ INSERT INTO Historico_puesto (ID_empleado, ID_vivero, ID_Zona, Fecha_ini, Fecha_
 (3, 2, 2, '2025-03-01', '2025-08-31', 'Vendedor Decoración', 85.00),
 (4, 3, 1, '2025-01-10', NULL, 'Atención al Cliente', 90.00);
 
+<img width="1411" height="207" alt="image" src="https://github.com/user-attachments/assets/2ee05fcb-5656-4b95-9e82-267602eb7346" />
+
 ### Tabla de Cliente_Plus
 
 CREATE TABLE Cliente_Plus (
@@ -337,4 +339,4 @@ SET Importe_Total = (
 <img width="1411" height="207" alt="image" src="https://github.com/user-attachments/assets/2ee05fcb-5656-4b95-9e82-267602eb7346" />
 
 
-<img width="700" height="191" alt="image" src="https://github.com/user-attachments/assets/4b04800b-c785-4bfb-a6fb-aab9d1c6ed21" />
+
