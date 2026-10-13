@@ -192,6 +192,9 @@ INSERT INTO Cliente_Plus (Nombre, Apellidos, Email, Fecha_Ingreso_Plus) VALUES
 ('Roberto', 'Mendoza Delgado', 'roberto.mendoza@email.com', '2024-08-01'),
 ('Carmen', 'Santana Ruiz', 'carmen.santana@email.com', '2025-01-05');
 
+<img width="1092" height="197" alt="image" src="https://github.com/user-attachments/assets/422a4bf2-e251-411e-8b1d-6e2c5225494e" />
+
+
 
 ### Tabla de Bonificacion
 
@@ -301,18 +304,6 @@ GROUP BY p.ID_pedido, p.Fecha, p.ID_Cliente, p.ID_empleado;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 UPDATE Pedido p
 SET Importe_Total = (
     SELECT COALESCE(SUM(dp.Cantidad * dp.Precio_Unitario), 0)
@@ -324,19 +315,6 @@ SET Importe_Total = (
 
 
 
-
-
-
-
-
-
-
-
-
-<img width="1092" height="197" alt="image" src="https://github.com/user-attachments/assets/422a4bf2-e251-411e-8b1d-6e2c5225494e" />
-
-
-<img width="1411" height="207" alt="image" src="https://github.com/user-attachments/assets/2ee05fcb-5656-4b95-9e82-267602eb7346" />
 
 
 
