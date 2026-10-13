@@ -215,6 +215,9 @@ INSERT INTO Bonificacion (ID_Cliente, Mes_año, Volumen_compras, Bonificacion) V
 (4, '2026-02', 50.00, 0.00);
 
 
+<img width="937" height="220" alt="image" src="https://github.com/user-attachments/assets/fbc4b735-46b5-48c0-bc30-95bbb32b6371" />
+
+
 ### Tabla de Pedido
 
 CREATE TABLE Pedido (
@@ -241,6 +244,7 @@ INSERT INTO Pedido (Fecha, Importe_Total, ID_Cliente, ID_empleado) VALUES
 ('2026-02-14 11:00:00', 15.00, 1, 1),
 ('2026-02-20 18:20:00', 89.50, 4, 3);
 
+<img width="932" height="232" alt="image" src="https://github.com/user-attachments/assets/e93fd587-486e-4759-9d8a-13287022d17a" />
 
 ### Tabla de Detalle_Pedido
 
@@ -318,17 +322,11 @@ SET Importe_Total = (
 
 
 
-<img width="770" height="202" alt="image" src="https://github.com/user-attachments/assets/c9abe751-7052-4ba0-b684-f8b59ed9cecc" />
-
-
-<img width="657" height="211" alt="image" src="https://github.com/user-attachments/assets/dc9e66db-bb27-4d06-af7e-c197f56d5b42" />
 
 
 
-<img width="932" height="232" alt="image" src="https://github.com/user-attachments/assets/e93fd587-486e-4759-9d8a-13287022d17a" />
 
 
-<img width="937" height="220" alt="image" src="https://github.com/user-attachments/assets/fbc4b735-46b5-48c0-bc30-95bbb32b6371" />
 
 
 <img width="1092" height="197" alt="image" src="https://github.com/user-attachments/assets/422a4bf2-e251-411e-8b1d-6e2c5225494e" />
