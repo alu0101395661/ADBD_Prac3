@@ -18,37 +18,131 @@ CREATE DATABASE viveros;
 
 ### Tablas del modelo relacional
 
-CREATE TABLE Vivero ( ID_vivero INT AUTO_INCREMENT, Nombre VARCHAR(100) NOT NULL, Latitud DECIMAL(9,6) CHECK (Latitud BETWEEN -90 AND 90)
-,  Longitud DECIMAL(9,6) CHECK (Longitud BETWEEN -180 AND 180), CONSTRAINT PK_Vivero PRIMARY KEY (ID_vivero) );
+CREATE TABLE Vivero (
+    ID_vivero SERIAL,
+    Nombre VARCHAR(100) NOT NULL,
+    Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000),
+    Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000),
+    CONSTRAINT PK_Vivero PRIMARY KEY (ID_vivero)
+);
 
-CREATE TABLE Zona (ID_vivero INT, ID_Zona INT, Nombre VARCHAR(50) NOT NULL, Latitud DECIMAL(9,6) CHECK (Latitud BETWEEN -90 AND 90)
-,  Longitud DECIMAL(9,6) CHECK (Longitud BETWEEN -180 AND 180), CONSTRAINT PK_Zona PRIMARY KEY (ID_vivero, ID_Zona), CONSTRAINT FK_Zona_Vivero FOREIGN KEY (ID_vivero) REFERENCES Vivero(ID_vivero)  ON DELETE CASCADE ON UPDATE CASCADE );
+CREATE TABLE Zona (
+    ID_vivero INT NOT NULL,
+    ID_Zona INT NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000),
+    Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000),
+    CONSTRAINT PK_Zona PRIMARY KEY (ID_vivero, ID_Zona),
+    CONSTRAINT FK_Zona_Vivero FOREIGN KEY (ID_vivero) 
+        REFERENCES Vivero(ID_vivero) 
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-CREATE TABLE Producto (ID_producto INT AUTO_INCREMENT, Nombre VARCHAR(100) NOR NULL, Tipo VARCHAR(50) CHECK (Tipo IN ('Planta de Exterior', 'Planta de Interior', 'Herramienta', 'Abono', 'Decoración')), Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0), CONSTRAINT PK_Producto PRIMARY KEY (ID_producto) );
+CREATE TABLE Producto (
+    ID_producto SERIAL,
+    Nombre VARCHAR(100) NOT NULL,
+    Tipo VARCHAR(50) NULL CHECK (Tipo IN ('Planta de Exterior', 'Herramienta', 'Abono', 'Decoración')),
+    Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0.00),
+    CONSTRAINT PK_Producto PRIMARY KEY (ID_producto)
+);
 
-CREATE TABLE Stock (ID_vivero INT, ID_Zona INT, ID_producto INT, Cantidad INT NOT NULL CHECK (Cantidad >= 0), CONSTRAINT PK_Stock PRIMARY KEY (ID_vivero, ID_Zona, ID_producto), CONSTRAINT FK_Stock_Zona FOREIGN KEY (ID_vivero, ID_Zona) REFERENCES Zona(ID_vivero, ID_Zona) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT FK_Stock_Producto FOREIGN KEY (ID_producto) REFERENCES Producto(ID_producto)  ON DELETE RESTRICT ON UPDATE CASCADE );
+CREATE TABLE Stock (
+    ID_vivero INT NOT NULL,
+    ID_Zona INT NOT NULL,
+    ID_producto INT NOT NULL,
+    Cantidad INT NOT NULL DEFAULT 0 CHECK (Cantidad >= 0),
+    CONSTRAINT PK_Stock PRIMARY KEY (ID_vivero, ID_Zona, ID_producto),
+    CONSTRAINT FK_Stock_Zona FOREIGN KEY (ID_vivero, ID_Zona) 
+        REFERENCES Zona(ID_vivero, ID_Zona) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_Stock_Producto FOREIGN KEY (ID_producto) 
+        REFERENCES Producto(ID_producto) 
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 CREATE TABLE Empleado (
-    ID_empleado INT AUTO_INCREMENT, DNI_NIE VARCHAR(10) NOT NULL UNIQUE, Nombre VARCHAR(50) NOT NULL, Apellidos VARCHAR(100) NOT NULL, CONSTRAINT PK_Empleado PRIMARY KEY (ID_empleado)
+    ID_empleado SERIAL,
+    DNI_NIE VARCHAR(10) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellidos VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_Empleado PRIMARY KEY (ID_empleado),
+    CONSTRAINT UQ_Empleado_DNI UNIQUE (DNI_NIE)
 );
 
 
 CREATE TABLE Historico_puesto (
-    ID_empleado INT, ID_vivero INT, ID_Zona INT, Fecha_ini DATE NOT NULL, Fecha_fin DATE, Puesto_Tarea VARCHAR(50) NOT NULL, Indicador_Productividad DECIMAL(5,2) CHECK (Indicador_Productividad BETWEEN 0 AND 100), CONSTRAINT PK_Historico PRIMARY KEY (ID_empleado, ID_vivero, ID_Zona, Fecha_ini), CONSTRAINT CK_Fechas CHECK (Fecha_fin IS NULL OR Fecha_fin >= Fecha_ini), CONSTRAINT FK_Historico_Empleado FOREIGN KEY (ID_empleado) REFERENCES Empleado(ID_empleado) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT FK_Historico_Zona FOREIGN KEY (ID_vivero, ID_Zona) REFERENCES Zona(ID_vivero, ID_Zona) ON DELETE CASCADE ON UPDATE CASCADE);
+    ID_empleado INT NOT NULL,
+    ID_vivero INT NOT NULL,
+    ID_Zona INT NOT NULL,
+    Fecha_ini DATE NOT NULL,
+    Fecha_fin DATE NULL,
+    Puesto_Tarea VARCHAR(50) NOT NULL,
+    Indicador_Productividad DECIMAL(5,2) NULL CHECK (Indicador_Productividad BETWEEN 0.00 AND 100.00),
+    CONSTRAINT PK_Historico_puesto PRIMARY KEY (ID_empleado, ID_vivero, ID_Zona, Fecha_ini),
+    CONSTRAINT CK_Historico_Fechas CHECK (Fecha_fin IS NULL OR Fecha_fin >= Fecha_ini),
+    CONSTRAINT FK_Historico_Empleado FOREIGN KEY (ID_empleado) 
+        REFERENCES Empleado(ID_empleado) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_Historico_Zona FOREIGN KEY (ID_vivero, ID_Zona) 
+        REFERENCES Zona(ID_vivero, ID_Zona) 
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
-CREATE TABLE Cliente_Plus ( ID_Cliente INT AUTO_INCREMENT, Nombre VARCHAR(50) NOT NULL, Apellidos VARCHAR(100) NOT NULL, Email VARCHAR(100) NOT NULL UNIQUE CHECK (Email LIKE '%@%.%'), Fecha_Ingreso_Plus DATE NOT NULL DEFAULT CURRENT_DATE, CONSTRAINT PK_Cliente_Plus PRIMARY KEY (ID_Cliente) );
+CREATE TABLE Cliente_Plus (
+    ID_Cliente SERIAL,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellidos VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Fecha_Ingreso_Plus DATE NOT NULL DEFAULT CURRENT_DATE,
+    CONSTRAINT PK_Cliente_Plus PRIMARY KEY (ID_Cliente),
+    CONSTRAINT UQ_Cliente_Plus_Email UNIQUE (Email),
+    CONSTRAINT CK_Cliente_Plus_Email_Format CHECK (Email LIKE '%@%.%')
+);
 
 
 CREATE TABLE Bonificacion (
-    ID_bonificacion INT AUTO_INCREMENT, ID_Cliente INT NOT NULL, Mes_año VARCHAR(7) NOT NULL CHECK (Mes_año LIKE '____-__'), 
-Volumen_compras DECIMAL(10,2) DEFAULT 0.00 CHECK (Volumen_compras >= 0), Bonificacion DECIMAL(10,2) DEFAULT 0.00 CHECK (Bonificacion >= 0), CONSTRAINT PK_Bonificacion PRIMARY KEY (ID_bonificacion), CONSTRAINT UQ_Cliente_Mes UNIQUE (ID_Cliente, Mes_año), CONSTRAINT FK_Bonificacion_Cliente FOREIGN KEY (ID_Cliente)  REFERENCES Cliente_Plus(ID_Cliente) ON DELETE CASCADE ON UPDATE CASCADE);
+    ID_bonificacion SERIAL,
+    ID_Cliente INT NOT NULL,
+    Mes_año VARCHAR(7) NOT NULL, -- Formato 'YYYY-MM'
+    Volumen_compras DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (Volumen_compras >= 0.00),
+    Bonificacion DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (Bonificacion >= 0.00),
+    CONSTRAINT PK_Bonificacion PRIMARY KEY (ID_bonificacion),
+    CONSTRAINT UQ_Bonificacion_Cliente_Mes UNIQUE (ID_Cliente, Mes_año),
+    CONSTRAINT CK_Bonificacion_MesFormat CHECK (Mes_año ~ '^[0-9]{4}-(0[1-9]|1[0-2])$'),
+    CONSTRAINT FK_Bonificacion_Cliente FOREIGN KEY (ID_Cliente) 
+        REFERENCES Cliente_Plus(ID_Cliente) 
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 CREATE TABLE Pedido (
-    ID_pedido INT AUTO_INCREMENT, Fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, Importe_Total DECIMAL(10,2) DEFAULT 0.00 CHECK (Importe_Total >= 0), ID_Cliente INT NOT NULL, ID_empleado INT NOT NULL, CONSTRAINT PK_Pedido PRIMARY KEY (ID_pedido), CONSTRAINT FK_Pedido_Cliente FOREIGN KEY (ID_Cliente) REFERENCES Cliente_Plus(ID_Cliente) ON DELETE RESTRICT ON UPDATE CASCADE, CONSTRAINT FK_Pedido_Empleado FOREIGN KEY (ID_empleado) REFERENCES Empleado(ID_empleado) ON DELETE RESTRICT ON UPDATE CASCADE);
+    ID_pedido SERIAL,
+    Fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Importe_Total DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (Importe_Total >= 0.00), -- Atributo Derivado
+    ID_Cliente INT NOT NULL,
+    ID_empleado INT NOT NULL,
+    CONSTRAINT PK_Pedido PRIMARY KEY (ID_pedido),
+    CONSTRAINT FK_Pedido_Cliente FOREIGN KEY (ID_Cliente) 
+        REFERENCES Cliente_Plus(ID_Cliente) 
+        ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT FK_Pedido_Empleado FOREIGN KEY (ID_empleado) 
+        REFERENCES Empleado(ID_empleado) 
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 
 CREATE TABLE Detalle_Pedido (
-    ID_pedido INT, ID_producto INT, Cantidad INT NOT NULL CHECK (Cantidad > 0), Precio_Unitario DECIMAL(10,2) NOT NULL CHECK (Precio_Unitario >= 0), CONSTRAINT PK_Detalle_Pedido PRIMARY KEY (ID_pedido, ID_producto), CONSTRAINT FK_Detalle_Pedido_Pedido FOREIGN KEY (ID_pedido) REFERENCES Pedido(ID_pedido) ON DELETE CASCADE ON UPDATE CASCADE, CONSTRAINT FK_Detalle_Pedido_Producto FOREIGN KEY (ID_producto) REFERENCES Producto(ID_producto) ON DELETE RESTRICT ON UPDATE CASCADE );
+    ID_pedido INT NOT NULL,
+    ID_producto INT NOT NULL,
+    Cantidad INT NOT NULL CHECK (Cantidad > 0),
+    Precio_Unitario DECIMAL(10,2) NOT NULL CHECK (Precio_Unitario >= 0.00),
+    CONSTRAINT PK_Detalle_Pedido PRIMARY KEY (ID_pedido, ID_producto),
+    CONSTRAINT FK_Detalle_Pedido_Pedido FOREIGN KEY (ID_pedido) 
+        REFERENCES Pedido(ID_pedido) 
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT FK_Detalle_Pedido_Producto FOREIGN KEY (ID_producto) 
+        REFERENCES Producto(ID_producto) 
+        ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 
 
