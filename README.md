@@ -41,7 +41,7 @@ CREATE TABLE Zona (
 CREATE TABLE Producto (
     ID_producto SERIAL,
     Nombre VARCHAR(100) NOT NULL,
-    Tipo VARCHAR(50) NULL CHECK (Tipo IN ('Planta de Exterior', 'Herramienta', 'Abono', 'Decoración')),
+    Tipo VARCHAR(50) NULL CHECK (Tipo IN ('Planta', 'Herramienta', 'Abono', 'Decoración')),
     Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0.00),
     CONSTRAINT PK_Producto PRIMARY KEY (ID_producto)
 );
@@ -177,11 +177,10 @@ INSERT INTO Zona (ID_vivero, ID_Zona, Nombre, Latitud, Longitud) VALUES
 
 
 INSERT INTO Producto (Nombre, Tipo, Precio) VALUES
-('Rosal Rojo', 'Planta de Exterior', 12.50),
-('Ficus Benjamina', 'Planta de Interior', 25.00),
-('Sustrato Universal 50L', 'Abono', 8.95),
+('Rosal Rojo', 'Planta', 12.50),
+('Crece plantas 50L', 'Abono', 8.95),
 ('Tijeras de Podar Pro', 'Herramienta', 18.20),
-('Maceta Cerámica Artesanal', 'Decoración', 15.00);
+('Maceta de Cerámica', 'Decoración', 15.00);
 
 
 
@@ -249,3 +248,34 @@ SET Importe_Total = (
     FROM Detalle_Pedido dp
     WHERE dp.ID_pedido = p.ID_pedido
 );
+
+
+<img width="941" height="252" alt="image" src="https://github.com/user-attachments/assets/3fedcda8-f24e-4ad8-838e-1a60c5d6b50d" />
+
+
+
+<img width="877" height="227" alt="image" src="https://github.com/user-attachments/assets/3331f17a-570a-4cc9-b1a8-c7c22ce2720f" />
+
+
+
+
+<img width="770" height="202" alt="image" src="https://github.com/user-attachments/assets/c9abe751-7052-4ba0-b684-f8b59ed9cecc" />
+
+
+<img width="657" height="211" alt="image" src="https://github.com/user-attachments/assets/dc9e66db-bb27-4d06-af7e-c197f56d5b42" />
+
+
+
+<img width="932" height="232" alt="image" src="https://github.com/user-attachments/assets/e93fd587-486e-4759-9d8a-13287022d17a" />
+
+
+<img width="937" height="220" alt="image" src="https://github.com/user-attachments/assets/fbc4b735-46b5-48c0-bc30-95bbb32b6371" />
+
+
+<img width="1092" height="197" alt="image" src="https://github.com/user-attachments/assets/422a4bf2-e251-411e-8b1d-6e2c5225494e" />
+
+
+<img width="1411" height="207" alt="image" src="https://github.com/user-attachments/assets/2ee05fcb-5656-4b95-9e82-267602eb7346" />
+
+
+<img width="700" height="191" alt="image" src="https://github.com/user-attachments/assets/4b04800b-c785-4bfb-a6fb-aab9d1c6ed21" />
