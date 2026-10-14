@@ -31,15 +31,15 @@ CREATE TABLE Vivero (
     CONSTRAINT PK_Vivero PRIMARY KEY (ID_vivero)
 );
 
-ID_vivero SERIAL: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
+**ID_vivero SERIAL**: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
 
-Nombre VARCHAR(100) NOT NULL: Variable de hasta 100 caracteres que no puede ser vacio.
+**Nombre VARCHAR(100) NOT NULL**: Variable de hasta 100 caracteres que no puede ser vacio.
 
-Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000): número decimal que debe estar entre el -90 y el 90 con un total de 9 dígitos, siendo 6 de ellos números decimales.
+**Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000)**: número decimal que debe estar entre el -90 y el 90 con un total de 9 dígitos, siendo 6 de ellos números decimales.
 
-Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000):  número decimal que debe estar entre el -180 y el 180 con un total de 9 dígitos, siendo 6 de ellos números decimales.
+**Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000)**:  número decimal que debe estar entre el -180 y el 180 con un total de 9 dígitos, siendo 6 de ellos números decimales.
 
- PK_Vivero PRIMARY KEY (ID_vivero): ID_vivero es la llave primaria.
+ **PK_Vivero PRIMARY KEY (ID_vivero)**: ID_vivero es la llave primaria.
 
 ### Ejemplos añadidos
 
@@ -66,21 +66,21 @@ CREATE TABLE Zona (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-ID_vivero INT NOT NULL:  Entero que no puede ser negativo que hace referencia al vivero asociado.
+**ID_vivero INT NOT NULL**:  Entero que no puede ser negativo que hace referencia al vivero asociado.
 
-ID_Zona INT NOT NULL:  Entero que no puede ser negativo que hace referencia a la zona que es.
+**ID_Zona INT NOT NULL**:  Entero que no puede ser negativo que hace referencia a la zona que es.
 
-Nombre VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
+**Nombre VARCHAR(50) NOT NULL**: Variable de hasta 50 caracteres que no puede ser vacio.
 
-Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000): número decimal que debe estar entre el -90 y el 90 con un total de 9 dígitos, siendo 6 de ellos números decimales.
+**Latitud DECIMAL(9,6) NULL CHECK (Latitud BETWEEN -90.000000 AND 90.000000)**: número decimal que debe estar entre el -90 y el 90 con un total de 9 dígitos, siendo 6 de ellos números decimales.
 
-Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000):  número decimal que debe estar entre el -180 y el 180 con un total de 9 dígitos, siendo 6 de ellos números decimales.
+**Longitud DECIMAL(9,6) NULL CHECK (Longitud BETWEEN -180.000000 AND 180.000000)**:  número decimal que debe estar entre el -180 y el 180 con un total de 9 dígitos, siendo 6 de ellos números decimales.
 
-PK_Zona PRIMARY KEY (ID_vivero, ID_Zona): Asignación de llaves primarias.
+**PK_Zona PRIMARY KEY (ID_vivero, ID_Zona)**: Asignación de llaves primarias.
 
-FK_Zona_Vivero FOREIGN KEY (ID_vivero): Asignación de llaves foráneas. 
+**FK_Zona_Vivero FOREIGN KEY (ID_vivero)**: Asignación de llaves foráneas. 
 
-Vivero(ID_vivero) ON DELETE CASCADE ON UPDATE CASCADE: En caso de que se borre el id_vivero, se actualizará la cascada automáticamente. 
+**Vivero(ID_vivero) ON DELETE CASCADE ON UPDATE CASCADE**: En caso de que se borre el id_vivero, se actualizará la cascada automáticamente. 
 
 ### Ejemplos añadidos
 
@@ -104,16 +104,16 @@ CREATE TABLE Producto (
     CONSTRAINT PK_Producto PRIMARY KEY (ID_producto)
 );
 
-ID_producto SERIAL: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
+**ID_producto SERIAL**: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
 
-Nombre VARCHAR(100) NOT NULL: Variable de hasta 100 caracteres que no puede ser vacio.
+**Nombre VARCHAR(100) NOT NULL**: Variable de hasta 100 caracteres que no puede ser vacio.
 
-Tipo VARCHAR(50) NULL CHECK (Tipo IN ('Planta', 'Herramienta', 'Abono', 'Decoración')): Elemento de hasta 50 caracteres que debe ser una planta, herramienta, abono o decoración. 
+**Tipo VARCHAR(50) NULL CHECK (Tipo IN ('Planta', 'Herramienta', 'Abono', 'Decoración'))**: Elemento de hasta 50 caracteres que debe ser una planta, herramienta, abono o decoración. 
 
 
-Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0.00): Decimal de hasta 10 cifras, de los cuales 2 son número decimales, que deberá ser mayor que 0 y no puede ser un elemento o atributo vacío.
+**Precio DECIMAL(10,2) NOT NULL CHECK (Precio >= 0.00)**: Decimal de hasta 10 cifras, de los cuales 2 son número decimales, que deberá ser mayor que 0 y no puede ser un elemento o atributo vacío.
 
-PK_Producto PRIMARY KEY (ID_producto): Asignación de llaves primarias.
+**PK_Producto PRIMARY KEY (ID_producto)**: Asignación de llaves primarias.
 
 
 
@@ -144,19 +144,19 @@ CREATE TABLE Stock (
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-ID_vivero INT NOT NULL:  Entero que no puede ser negativo que hace referencia al vivero asociado.
+**ID_vivero INT NOT NULL**:  Entero que no puede ser negativo que hace referencia al vivero asociado.
 
-ID_Zona INT NOT NULL:  Entero que no puede ser negativo que hace referencia a la zona que es.
+**ID_Zona INT NOT NULL**:  Entero que no puede ser negativo que hace referencia a la zona que es.
 
-ID_producto INT NOT NULL:  Entero que no puede ser negativo que hace referencia al producto referenciado.
+**ID_producto INT NOT NULL**:  Entero que no puede ser negativo que hace referencia al producto referenciado.
 
-Cantidad INT NOT NULL DEFAULT 0 CHECK (Cantidad >= 0): Entero que no puede ser menor que 0 que no puede ser elemento vacio.
+**Cantidad INT NOT NULL DEFAULT 0 CHECK (Cantidad >= 0)**: Entero que no puede ser menor que 0 que no puede ser elemento vacio.
 
-PK_Stock PRIMARY KEY (ID_vivero, ID_Zona, ID_producto): Asignacion de llaves primarias.
+**PK_Stock PRIMARY KEY (ID_vivero, ID_Zona, ID_producto)**: Asignacion de llaves primarias.
 
-FK_Stock_Zona FOREIGN KEY (ID_vivero, ID_Zona): Asignación de llave foránea.
+**FK_Stock_Zona FOREIGN KEY (ID_vivero, ID_Zona)**: Asignación de llave foránea.
 
-FK_Stock_Producto FOREIGN KEY (ID_producto): Asignación de llave foránea.
+**FK_Stock_Producto FOREIGN KEY (ID_producto)**: Asignación de llave foránea.
 
 ### Ejemplos añadidos
 
@@ -178,11 +178,11 @@ CREATE TABLE Empleado (
     CONSTRAINT UQ_Empleado_DNI UNIQUE (DNI_NIE)
 );
 
-ID_empleado SERIAL: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
+**ID_empleado SERIAL**: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
 
-DNI_NIE VARCHAR(10) NOT NULL: Variable de hasta 10 caracteres que no puede ser vacio.
+**DNI_NIE VARCHAR(10) NOT NULL**: Variable de hasta 10 caracteres que no puede ser vacio.
 
-Nombre VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
+**Nombre VARCHAR(50) NOT NULL**: Variable de hasta 50 caracteres que no puede ser vacio.
 
 Apellidos VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
 
