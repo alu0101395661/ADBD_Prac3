@@ -223,6 +223,25 @@ CREATE TABLE Historico_puesto (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+ID_vivero INT NOT NULL:  Entero que no puede ser negativo que hace referencia al vivero asociado.
+
+ID_Zona INT NOT NULL:  Entero que no puede ser negativo que hace referencia a la zona que es.
+
+ID_producto INT NOT NULL:  Entero que no puede ser negativo que hace referencia al producto referenciado.
+
+Fecha_ini DATE NOT NULL: Fecha de inicio del puesto, no puede ser un elemento vacio.
+
+Fecha_fin DATE NULL: Fecha de fin del puesto, no puede ser un elemento vacio.
+
+Puesto_Tarea VARCHAR(50) NOT NULL: Nombre de la tarea de hasta 50 caracteres, no puede ser un elemento vacio.
+
+Indicador_Productividad DECIMAL(5,2) NULL CHECK (Indicador_Productividad BETWEEN 0.00 AND 100.00): Indicador de productividad, decimal de hasta 5 número, 2 de ellos decimales entre 0 y 10; no puede ser un elemento vacio.
+
+PK_Historico_puesto PRIMARY KEY (ID_empleado, ID_vivero, ID_Zona, Fecha_ini),: Asignación de llaves primarias.
+
+FK_Historico_Empleado FOREIGN KEY (ID_empleado): Asignación de llaves primaria.
+
+
 ### Ejemplos añadidos
 
 
@@ -240,13 +259,29 @@ INSERT INTO Historico_puesto (ID_empleado, ID_vivero, ID_Zona, Fecha_ini, Fecha_
 CREATE TABLE Cliente_Plus (
     ID_Cliente SERIAL,
     Nombre VARCHAR(50) NOT NULL,
-    Apellidos VARCHAR(100) NOT NULL,
+    Apellidos VARCHAR(50) NOT NULL,
     Email VARCHAR(100) NOT NULL,
     Fecha_Ingreso_Plus DATE NOT NULL DEFAULT CURRENT_DATE,
     CONSTRAINT PK_Cliente_Plus PRIMARY KEY (ID_Cliente),
     CONSTRAINT UQ_Cliente_Plus_Email UNIQUE (Email),
     CONSTRAINT CK_Cliente_Plus_Email_Format CHECK (Email LIKE '%@%.%')
 );
+
+ID_cliente SERIAL: Número que se asigna a cada elemento de la tabla y va incrementando según se añade más elementos.
+
+Nombre VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
+
+Apellidos VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
+
+Email VARCHAR(50) NOT NULL: Variable de hasta 50 caracteres que no puede ser vacio.
+
+Fecha_Ingreso_Plus DATE NOT NULL DEFAULT CURRENT_DATE: Fecha de ingreso, que será la fecha actual si no se especifica; no puede ser un elemento vacio.
+
+CONSTRAINT PK_Cliente_Plus PRIMARY KEY (ID_Cliente):  Asignación de llave primaria.
+
+CONSTRAINT UQ_Cliente_Plus_Email UNIQUE (Email): Asignación de elemento único.
+
+CONSTRAINT CK_Cliente_Plus_Email_Format CHECK (Email LIKE '%@%.%'): Comprobación de que debe tener un arroba.
 
 ### Ejemplos añadidos
 
@@ -266,12 +301,12 @@ INSERT INTO Cliente_Plus (Nombre, Apellidos, Email, Fecha_Ingreso_Plus) VALUES
 CREATE TABLE Bonificacion (
     ID_bonificacion SERIAL,
     ID_Cliente INT NOT NULL,
-    Mes_año VARCHAR(7) NOT NULL, -- Formato 'YYYY-MM'
+    Mes_anyo VARCHAR(7) NOT NULL, -- Formato 'YYYY-MM'
     Volumen_compras DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (Volumen_compras >= 0.00),
     Bonificacion DECIMAL(10,2) NOT NULL DEFAULT 0.00 CHECK (Bonificacion >= 0.00),
     CONSTRAINT PK_Bonificacion PRIMARY KEY (ID_bonificacion),
-    CONSTRAINT UQ_Bonificacion_Cliente_Mes UNIQUE (ID_Cliente, Mes_año),
-    CONSTRAINT CK_Bonificacion_MesFormat CHECK (Mes_año ~ '^[0-9]{4}-(0[1-9]|1[0-2])$'),
+    CONSTRAINT UQ_Bonificacion_Cliente_Mes UNIQUE (ID_Cliente, Mes_anyo),
+    CONSTRAINT CK_Bonificacion_MesFormat CHECK (Mes_anyo ~ '^[0-9]{4}-(0[1-9]|1[0-2])$'),
     CONSTRAINT FK_Bonificacion_Cliente FOREIGN KEY (ID_Cliente) 
         REFERENCES Cliente_Plus(ID_Cliente) 
         ON DELETE CASCADE ON UPDATE CASCADE
